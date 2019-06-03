@@ -1,0 +1,2 @@
+1. pg is responsible for creating our application’s database connection.
+2. pg-hstore is a node package for serializing and deserializing JSON data to hstore format.

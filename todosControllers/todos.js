@@ -1,4 +1,5 @@
 import db from '../db/db';
+import models from '../models';
 
 class TodosController {
   getAllTodos(req, res) {
@@ -48,9 +49,20 @@ class TodosController {
     db.push(todo);
     return res.status(201).send({
       success: 'true',
-      message: 'todo added successfully',
+      message: 'Todo added successfully',
       todo
     });
+
+    // const todo = {
+    //   title: req.body.title
+    // };
+    // models.Todo.create(todo).then(todo => {
+    //   return res.status(201).send({
+    //     success: 'true',
+    //     message: 'Todo added successfully',
+    //     todo
+    //   });
+    // });
   }
 
   updateTodo(req, res) {
