@@ -1,3 +1,4 @@
+require('dotenv').config();
 import createError from 'http-errors';
 import express, { json, urlencoded, static as express_static } from 'express';
 import { join } from 'path';
