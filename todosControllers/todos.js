@@ -3,29 +3,29 @@ import models from '../models';
 
 class TodosController {
   getAllTodos(req, res) {
-    res.status(200).send({
-      success: 'true',
-      message: 'Todos retrieved successfully',
-      todos: db
-    });
+    models.Todo.findAll().then(todos =>
+      res.status(200).send({
+        success: 'true',
+        message: 'Todos retrieved successfully',
+        todos
+      })
+    );
   }
 
   getTodo(req, res) {
     const id = parseInt(req.params.id, 10);
-
-    db.map(todo => {
-      if (todo.id === id) {
+    models.Todo.findById(id).then(todo => {
+      if (todo) {
         return res.status(200).send({
           success: 'true',
-          message: 'Todo retrive successfully',
+          message: 'Todo retrieved successfully',
           todo
         });
       }
-    });
-
-    return res.status(404).send({
-      success: 'false',
-      message: 'Todo does not exist'
+      return res.status(404).send({
+        success: 'false',
+        message: 'Todo does not exist'
+      });
     });
   }
 
@@ -35,34 +35,35 @@ class TodosController {
         success: 'false',
         message: 'title is required'
       });
-    } else if (!req.body.description) {
-      return res.status(400).send({
-        success: 'false',
-        message: 'description is required'
-      });
     }
-    const todo = {
-      id: db.length + 1,
-      title: req.body.title,
-      description: req.body.description
-    };
-    db.push(todo);
-    return res.status(201).send({
-      success: 'true',
-      message: 'Todo added successfully',
-      todo
-    });
-
-    // const todo = {
-    //   title: req.body.title
-    // };
-    // models.Todo.create(todo).then(todo => {
-    //   return res.status(201).send({
-    //     success: 'true',
-    //     message: 'Todo added successfully',
-    //     todo
+    // else if (!req.body.description) {
+    //   return res.status(400).send({
+    //     success: 'false',
+    //     message: 'description is required'
     //   });
+    // }
+    // const todo = {
+    //   id: db.length + 1,
+    //   title: req.body.title,
+    //   description: req.body.description
+    // };
+    // db.push(todo);
+    // return res.status(201).send({
+    //   success: 'true',
+    //   message: 'Todo added successfully',
+    //   todo
     // });
+
+    const todo = {
+      title: req.body.title
+    };
+    models.Todo.create(todo).then(todo => {
+      return res.status(201).send({
+        success: 'true',
+        message: 'Todo added successfully',
+        todo
+      });
+    });
   }
 
   updateTodo(req, res) {

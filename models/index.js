@@ -9,8 +9,12 @@ const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
 
 let sequelize;
+
 if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+  sequelize = new Sequelize(
+    'postgres://hfdreirv:oF8ggwMGgtrQVbKchEnEOi_72wMn6eTN@raja.db.elephantsql.com:5432/hfdreirv',
+    config
+  );
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
