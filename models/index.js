@@ -11,6 +11,7 @@ const db = {};
 let sequelize;
 
 if (config.use_env_variable) {
+  // sequelize initialization
   sequelize = new Sequelize(
     'postgres://hfdreirv:oF8ggwMGgtrQVbKchEnEOi_72wMn6eTN@raja.db.elephantsql.com:5432/hfdreirv',
     config
